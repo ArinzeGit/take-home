@@ -1,34 +1,43 @@
-## Rules
+# Take-Home Coding Assignment
 
-- add/remove/modify existing code to achieve the end result (some code needs a refactor)
-- don't install additional packages
-- you need to use `zustand`, but it's up to you to decide what state should be global
-- write the code like it's a real feature
+## Overview
 
-### Cards
+This repository contains the solution for the coding challenge by SingleDraft. It includes a set of cards with functionality to expand/collapse, delete, and view deleted cards. The states are persisted across page refreshes, and animations are included for smooth transitions.
 
-- add expand/collapse functionality
-- make sure the "Delete" button works
-- add animations
+## Features Implemented
 
-### Deleted Cards
+- Expand/Collapse functionality for cards.
+- Delete functionality with state persistence.
+- Added "Reveal" functionality to display deleted cards.
+- State persistence after refresh.
+- Animations for smooth transitions.
+- "Refresh" functionality for reloading the state.
+- **Revert functionality**: Allows users to restore deleted cards back to their original state.
 
-- display the number of deleted cards
-- reveal deleted cards after user clicks the "Reveal" button - deleted card variant shouldn't contain the description
-- write the code, so in the future you will be able to add "revert" functionality
+## Coding Choices
 
-### Behavior
+- **State Management**: I used Zustand for global state management because it's simple and provides a flexible way to manage the state of expanded and deleted cards. Zustand is ideal for this use case as we need to share the card states across components.
+- **Animations**: I implemented animations using Tailwind CSS to keep the codebase lightweight while ensuring smooth transitions when expanding, collapsing, or revealing cards.
+- **Reusable Components**: I created a generic `<ToggleButton />` to handle any toggle functionality across the app, promoting reusability and cleaner code.
+- **State Persistence**: I ensured the states (expanded and deleted cards) are persisted even after a page refresh by using the global Zustand store, which maintains the state across renders.
 
-- cards by default should be collapsed
-- expanded/deleted cards' state needs to be persisted after "refreshing" (regardless of isVisible property)
-- "refresh" functionality needs to be implemented using `react-query`
+## Testing Approach
 
-### Miscellaneous
+- I would write **unit tests** for individual components like `<Card />`, `<DeletedCard />`, and `<ToggleButton />` to ensure they behave correctly based on different props and interactions.
+- **Integration tests** would be written to ensure the state changes correctly when interacting with the "Delete" and "Expand" buttons and that the animation effects are triggered as expected.
+- **End-to-End (E2E) tests** would verify the user flows, including card deletion, expansion, and the revealing of deleted cards.
+- I recommend focusing on unit and integration tests first, ensuring core functionalities are tested thoroughly, and then adding E2E tests for end-to-end user experience validation once a testing framework is set up.
 
-- add a "Refresh" button (just like the "Reveal" button)
-- create generic `<ToggleButton />`
+## How to Run
 
-### Additional
+1. Clone the repository:
+   `git clone https://github.com/ArinzeGit/take-home`
+2. Install dependencies:
+   `npm install`
+3. Start the development server:
+   `npm run dev`
+4. Open the app in your browser at `http://localhost:5173`
 
-You may leave a message explaining your coding choices, but it's not necessary.
-Testing framework isn't installed, so instead just explain whether you think it's a good or bad idea to write tests for this feature or how to approach it.
+## Additional Information
+
+Feel free to contact me if you have any questions or need further clarification regarding the implementation.
