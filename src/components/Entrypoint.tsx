@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useListStore } from "../store/listStore"; // Zustand store imported here
 import { useGetListData } from "../api/getListData";
-import { Card } from "./Card";
+import { Card, DeletedCard } from "./Cards";
 import { Spinner } from "./Spinner";
 
 export const Entrypoint = () => {
-  const { visibleCards, setVisibleCards } = useListStore();
+  const { visibleCards, setVisibleCards, deletedCards } = useListStore();
   const listQuery = useGetListData();
 
   // TOOD
@@ -50,9 +50,9 @@ export const Entrypoint = () => {
           </button>
         </div>
         <div className="flex flex-col gap-y-3">
-          {/* {deletedCards.map((card) => (
-            <Card key={card.id} card={card} />
-          ))} */}
+          {deletedCards.map((card) => (
+            <DeletedCard key={card.id} title={card.title} />
+          ))}
         </div>
       </div>
     </div>
