@@ -2,17 +2,22 @@ import { FC } from "react";
 import { ListItem } from "../api/getListData";
 import { DeleteButton, ExpandButton, RevertButton } from "./Buttons";
 import { ChevronUpIcon } from "./icons";
+import { useListStore } from "../store/listStore"; // Zustand store imported here
 
 type CardProps = {
+  id: ListItem["id"];
   title: ListItem["title"];
   description: ListItem["description"];
 };
 
 type DeletedCardProps = {
+  id: ListItem["id"];
   title: ListItem["title"];
 };
 
-export const Card: FC<CardProps> = ({ title, description }) => {
+export const Card: FC<CardProps> = ({ id, title, description }) => {
+  const { deleteCard } = useListStore(); // Access Zustand action
+
   return (
     <div className="border border-black px-2 py-1.5">
       <div className="flex justify-between mb-0.5">
@@ -21,7 +26,7 @@ export const Card: FC<CardProps> = ({ title, description }) => {
           <ExpandButton>
             <ChevronUpIcon />
           </ExpandButton>
-          <DeleteButton />
+          <DeleteButton onClick={() => deleteCard(id)} />
         </div>
       </div>
       <p className="text-sm">{description}</p>
@@ -29,11 +34,12 @@ export const Card: FC<CardProps> = ({ title, description }) => {
   );
 };
 
-export const DeletedCard: FC<DeletedCardProps> = ({ title }) => {
+export const DeletedCard: FC<DeletedCardProps> = ({ id, title }) => {
+  const { revertCard } = useListStore(); // Access Zustand action
   return (
     <div className="border border-black px-2 py-1.5 flex justify-between">
       <h1 className="font-medium">{title}</h1>
-      <RevertButton />
+      <RevertButton onClick={() => revertCard(id)} />
     </div>
   );
 };

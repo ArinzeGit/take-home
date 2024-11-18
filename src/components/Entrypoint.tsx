@@ -5,7 +5,7 @@ import { Card, DeletedCard } from "./Cards";
 import { Spinner } from "./Spinner";
 
 export const Entrypoint = () => {
-  const { visibleCards, setVisibleCards, deletedCards } = useListStore();
+  const { visibleCards, setVisibleCards, deletedCards } = useListStore(); // Access Zustand state and actions
   const listQuery = useGetListData();
 
   // TOOD
@@ -33,6 +33,7 @@ export const Entrypoint = () => {
           {visibleCards.map((card) => (
             <Card
               key={card.id}
+              id={card.id}
               title={card.title}
               description={card.description}
             />
@@ -51,7 +52,7 @@ export const Entrypoint = () => {
         </div>
         <div className="flex flex-col gap-y-3">
           {deletedCards.map((card) => (
-            <DeletedCard key={card.id} title={card.title} />
+            <DeletedCard key={card.id} id={card.id} title={card.title} />
           ))}
         </div>
       </div>
