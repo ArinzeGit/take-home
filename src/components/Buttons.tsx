@@ -6,7 +6,7 @@ type ButtonProps = React.ComponentProps<"button">;
 export const ExpandButton: FC<ButtonProps> = ({ children, ...props }) => {
   return (
     <button
-      className="hover:text-gray-700 transition-colors flex items-center justify-center"
+      className="text-gray-900 hover:text-gray-600 transition-colors flex items-center justify-center"
       {...props}
     >
       {children}
@@ -17,7 +17,7 @@ export const ExpandButton: FC<ButtonProps> = ({ children, ...props }) => {
 export const DeleteButton: FC<Omit<ButtonProps, "children">> = (props) => {
   return (
     <button
-      className="hover:text-gray-700 transition-colors flex items-center justify-center"
+      className="text-red-800 hover:text-red-600 transition-colors flex items-center justify-center"
       {...props}
     >
       <XMarkIcon />
@@ -28,7 +28,7 @@ export const DeleteButton: FC<Omit<ButtonProps, "children">> = (props) => {
 export const RevertButton: FC<Omit<ButtonProps, "children">> = (props) => {
   return (
     <button
-      className="hover:text-gray-700 transition-colors flex items-center justify-center"
+      className="text-blue-800 hover:text-blue-600 transition-colors flex items-center justify-center"
       {...props}
     >
       <RevertIcon />

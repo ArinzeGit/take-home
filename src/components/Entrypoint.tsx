@@ -89,13 +89,16 @@ export const Entrypoint = () => {
             Refresh
           </button>
         </div>
-        {isRevealed && (
-          <div className="flex flex-col gap-y-3">
-            {deletedCards.map((card) => (
-              <DeletedCard key={card.id} id={card.id} title={card.title} />
-            ))}
-          </div>
-        )}
+
+        <div
+          className={`flex flex-col gap-y-3 overflow-hidden transition-all duration-500 ${
+            isRevealed ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
+          }`}
+        >
+          {deletedCards.map((card) => (
+            <DeletedCard key={card.id} id={card.id} title={card.title} />
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -27,17 +27,23 @@ export const Card: FC<CardProps> = ({
   const { deleteCard } = useListStore(); // Access Zustand action
 
   return (
-    <div className="border border-black px-2 py-1.5">
-      <div className="flex justify-between mb-0.5">
-        <h1 className="font-medium">{title}</h1>
-        <div className="flex">
+    <div className="border border-gray-300 rounded-lg shadow-md px-4 py-3 transform transition-transform duration-300 hover:scale-105 hover:shadow-lg">
+      <div className="flex justify-between items-center mb-2">
+        <h1 className="font-semibold text-lg text-gray-800">{title}</h1>
+        <div className="flex gap-2">
           <ExpandButton onClick={onExpand}>
             {isExpanded ? <ChevronUpIcon /> : <ChevronDownIcon />}
           </ExpandButton>
           <DeleteButton onClick={() => deleteCard(id)} />
         </div>
       </div>
-      {isExpanded && <p className="text-sm">{description}</p>}
+      <div
+        className={`overflow-hidden transition-all duration-500 ${
+          isExpanded ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
+        }`}
+      >
+        <p className="text-sm text-gray-600">{description}</p>
+      </div>
     </div>
   );
 };
@@ -45,8 +51,8 @@ export const Card: FC<CardProps> = ({
 export const DeletedCard: FC<DeletedCardProps> = ({ id, title }) => {
   const { revertCard } = useListStore(); // Access Zustand action
   return (
-    <div className="border border-black px-2 py-1.5 flex justify-between">
-      <h1 className="font-medium">{title}</h1>
+    <div className="bg-gray-100 border border-gray-300 rounded-lg shadow-sm px-4 py-3 flex justify-between items-center hover:bg-gray-200 transition-all">
+      <h1 className="font-semibold text-gray-800">{title}</h1>
       <RevertButton onClick={() => revertCard(id)} />
     </div>
   );
