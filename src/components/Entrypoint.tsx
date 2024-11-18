@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useListStore } from "../store/listStore"; // Zustand store imported here
 import { useGetListData } from "../api/getListData";
 import { Card, DeletedCard } from "./Cards";
@@ -6,6 +6,10 @@ import { Spinner } from "./Spinner";
 
 export const Entrypoint = () => {
   const { visibleCards, setVisibleCards, deletedCards } = useListStore(); // Access Zustand state and actions
+  const [isRevealed, setIsRevealed] = useState(false);
+  const toggleReveal = () => {
+    setIsRevealed(!isRevealed);
+  };
   const listQuery = useGetListData();
 
   // TOOD
@@ -46,17 +50,19 @@ export const Entrypoint = () => {
             Deleted Cards ({deletedCards.length})
           </h1>
           <button
-            disabled
+            onClick={toggleReveal}
             className="text-white text-sm transition-colors hover:bg-gray-800 disabled:bg-black/75 bg-black rounded px-3 py-1"
           >
-            Reveal
+            {isRevealed ? "Hide" : "Reveal"}
           </button>
         </div>
-        <div className="flex flex-col gap-y-3">
-          {deletedCards.map((card) => (
-            <DeletedCard key={card.id} id={card.id} title={card.title} />
-          ))}
-        </div>
+        {isRevealed && (
+          <div className="flex flex-col gap-y-3">
+            {deletedCards.map((card) => (
+              <DeletedCard key={card.id} id={card.id} title={card.title} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
