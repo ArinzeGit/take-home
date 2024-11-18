@@ -3,6 +3,7 @@ import { useListStore } from "../store/listStore"; // Zustand store imported her
 import { useGetListData } from "../api/getListData";
 import { Card, DeletedCard } from "./Cards";
 import { Spinner } from "./Spinner";
+import { ToggleButton } from "./ToggleButton"; //Generic Toggle button for reveal/hide feature
 
 export const Entrypoint = () => {
   const {
@@ -71,13 +72,12 @@ export const Entrypoint = () => {
           <h1 className="mb-1 font-medium text-lg">
             Deleted Cards ({deletedCards.length})
           </h1>
-          <button
-            onClick={toggleReveal}
-            className="text-white text-sm transition-colors hover:bg-gray-800 disabled:bg-black/75 bg-black rounded px-3 py-1"
-          >
-            {isRevealed ? "Hide" : "Reveal"}
-          </button>
-
+          <ToggleButton
+            isActive={isRevealed}
+            onToggle={toggleReveal}
+            activeLabel="Hide"
+            inactiveLabel="Reveal"
+          />
           <button
             onClick={handleRefresh}
             className="text-white text-sm transition-colors hover:bg-gray-800 bg-black rounded px-3 py-1"
