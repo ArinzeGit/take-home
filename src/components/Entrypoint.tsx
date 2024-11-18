@@ -72,16 +72,18 @@ export const Entrypoint = () => {
         </div>
       </div>
       <div className="w-[clamp(400px,30%,600px)]">
-        <div className="flex items-center justify-between">
-          <h1 className="mb-1 font-medium text-lg">
-            Deleted Cards ({deletedCards.length})
-          </h1>
-          <ToggleButton
-            isActive={isRevealed}
-            onToggle={toggleReveal}
-            activeLabel="Hide"
-            inactiveLabel="Reveal"
-          />
+        <div className="flex items-center justify-between mb-1">
+          <div className="flex gap-10">
+            <h1 className="mb-1 font-medium text-lg">
+              Deleted Cards ({deletedCards.length})
+            </h1>
+            <ToggleButton
+              isActive={isRevealed}
+              onToggle={toggleReveal}
+              activeLabel="Hide"
+              inactiveLabel="Reveal"
+            />
+          </div>
           <button
             onClick={handleRefresh}
             className="text-white text-sm transition-colors hover:bg-gray-800 bg-black rounded px-3 py-1"
