@@ -5,23 +5,43 @@ import { Card, DeletedCard } from "./Cards";
 import { Spinner } from "./Spinner";
 
 export const Entrypoint = () => {
-  const { visibleCards, setVisibleCards, deletedCards } = useListStore(); // Access Zustand state and actions
+  const {
+    visibleCards,
+    deletedCards,
+    expandedCards,
+    toggleExpandCard,
+    persistState,
+    loadPersistedState,
+    refreshCards,
+  } = useListStore(); // Access Zustand state and actions
+
   const [isRevealed, setIsRevealed] = useState(false);
-  const toggleReveal = () => {
-    setIsRevealed(!isRevealed);
-  };
+  const toggleReveal = () => setIsRevealed((prev) => !prev);
   const listQuery = useGetListData();
 
-  // TOOD
-  // const deletedCards: DeletedListItem[] = [];
-
+  // Load persisted state on component mount
   useEffect(() => {
-    if (listQuery.isLoading) {
-      return;
-    }
+    loadPersistedState();
+  }, []);
 
-    setVisibleCards(listQuery.data?.filter((item) => item.isVisible) ?? []);
-  }, [listQuery.data, listQuery.isLoading]);
+  // Persist state to localStorage whenever the state changes
+  useEffect(() => {
+    persistState();
+  }, [visibleCards, deletedCards, expandedCards]);
+
+  // Initialize visible cards from fetched data (if not already persisted) that is first render
+  useEffect(() => {
+    if (!listQuery.isLoading && listQuery.data && visibleCards.length === 0) {
+      refreshCards(listQuery.data.filter((item) => item.isVisible) ?? []); // Use the new cards from react-query
+    }
+  }, [listQuery.data, listQuery.isLoading, visibleCards.length]);
+
+  // Refresh functionality: fetch new data and reset the store
+  const handleRefresh = () => {
+    listQuery.refetch(); // Triggers a new data fetch using the refetch() method provided by react-query's useQuery hook
+    if (!listQuery.data) return;
+    refreshCards(listQuery.data.filter((item) => item.isVisible) ?? []); // Use the new cards from react-query
+  };
 
   if (listQuery.isLoading) {
     return <Spinner />;
@@ -40,6 +60,8 @@ export const Entrypoint = () => {
               id={card.id}
               title={card.title}
               description={card.description}
+              isExpanded={expandedCards.has(card.id)} // Pass expansion state
+              onExpand={() => toggleExpandCard(card.id)} // Toggle expansion
             />
           ))}
         </div>
@@ -54,6 +76,13 @@ export const Entrypoint = () => {
             className="text-white text-sm transition-colors hover:bg-gray-800 disabled:bg-black/75 bg-black rounded px-3 py-1"
           >
             {isRevealed ? "Hide" : "Reveal"}
+          </button>
+
+          <button
+            onClick={handleRefresh}
+            className="text-white text-sm transition-colors hover:bg-gray-800 bg-black rounded px-3 py-1"
+          >
+            Refresh
           </button>
         </div>
         {isRevealed && (
