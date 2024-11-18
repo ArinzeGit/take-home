@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
-import { ListItem, useGetListData } from "../api/getListData";
+import { useEffect } from "react";
+import { useListStore } from "../store/listStore"; // Zustand store imported here
+import { useGetListData } from "../api/getListData";
 import { Card } from "./Card";
 import { Spinner } from "./Spinner";
 
 export const Entrypoint = () => {
-  const [visibleCards, setVisibleCards] = useState<ListItem[]>([]);
+  const { visibleCards, setVisibleCards } = useListStore();
   const listQuery = useGetListData();
 
   // TOOD
