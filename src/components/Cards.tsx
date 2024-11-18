@@ -1,7 +1,7 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { ListItem } from "../api/getListData";
 import { DeleteButton, ExpandButton, RevertButton } from "./Buttons";
-import { ChevronUpIcon } from "./icons";
+import { ChevronUpIcon, ChevronDownIcon } from "./icons";
 import { useListStore } from "../store/listStore"; // Zustand store imported here
 
 type CardProps = {
@@ -17,19 +17,23 @@ type DeletedCardProps = {
 
 export const Card: FC<CardProps> = ({ id, title, description }) => {
   const { deleteCard } = useListStore(); // Access Zustand action
+  const [isCollapsed, setIsCollapsed] = useState(true);
+  const toggleCollapse = () => {
+    setIsCollapsed(!isCollapsed);
+  };
 
   return (
     <div className="border border-black px-2 py-1.5">
       <div className="flex justify-between mb-0.5">
         <h1 className="font-medium">{title}</h1>
         <div className="flex">
-          <ExpandButton>
-            <ChevronUpIcon />
+          <ExpandButton onClick={toggleCollapse}>
+            {isCollapsed ? <ChevronDownIcon /> : <ChevronUpIcon />}
           </ExpandButton>
           <DeleteButton onClick={() => deleteCard(id)} />
         </div>
       </div>
-      <p className="text-sm">{description}</p>
+      {!isCollapsed && <p className="text-sm">{description}</p>}
     </div>
   );
 };
