@@ -45,7 +45,11 @@ export const Entrypoint = () => {
   };
 
   if (listQuery.isLoading) {
-    return <Spinner />;
+    return (
+      <div className="flex justify-center">
+        <Spinner />
+      </div>
+    );
   }
 
   return (
