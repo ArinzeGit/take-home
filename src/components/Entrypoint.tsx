@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useListStore } from "../store/listStore"; // Zustand store imported here
+import { useListStore } from "../store"; // Zustand store imported here
 import { useGetListData } from "../api/getListData";
 import { Card, DeletedCard } from "./Cards";
 import { Spinner } from "./Spinner";

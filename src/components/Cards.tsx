@@ -2,7 +2,7 @@ import { FC } from "react";
 import { ListItem } from "../api/getListData";
 import { DeleteButton, ExpandButton, RevertButton } from "./Buttons";
 import { ChevronUpIcon, ChevronDownIcon } from "./icons";
-import { useListStore } from "../store/listStore"; // Zustand store imported here
+import { useListStore } from "../store"; // Zustand store imported here
 
 type CardProps = {
   id: ListItem["id"];
